@@ -5,11 +5,20 @@ import { Signin } from './form/Signin';
 import { Signup } from './form/Signup';
 import './App.css'
 
+interface Inputs {
+  [key: string]: string;
+};
+
 function App() {
+  const handleSubmit = (inputs: Inputs) => {
+    const inputsString: string = Object.entries(inputs).reduce((acc, cur) => `${acc}${cur[0]}: ${cur[1]}\n`, '');
+    alert(`Значения полей:\n${inputsString}`)
+  };
+
   return (
     <div className="grid">
       <div className='column'>
-        <Signin />
+        <Signin onSubmit={handleSubmit}/>
       </div>
       <div className='column'>
         <Signup />
