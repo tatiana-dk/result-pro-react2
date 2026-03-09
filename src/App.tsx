@@ -21,7 +21,7 @@ function App() {
         <Signin onSubmit={handleSubmit}/>
       </div>
       <div className='column'>
-        <Signup />
+        <Signup onSubmit={handleSubmit} />
       </div>
     </div>
   )
