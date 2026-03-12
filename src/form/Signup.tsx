@@ -1,19 +1,17 @@
-import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { useCallback, useMemo, useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
 import { TextInput } from "./TextInput";
+import {isTextInput, validateEmail, validatePassword, getControl, getControlValue} from './utils.ts';
 import type {Control} from './types.ts';
 
 interface SignupProps {
     onSubmit: (arg: Control[]) => void
 };
 
-const isTextInput = (input: Control) => {
-    return input.type === 'text' ||
-        input.type === 'email' ||
-        input.type === 'password'
-};
+const EMAIL_ERROR: string = 'Неверный email';
+const PASSWORD_ERROR: string = 'Неверный пароль';
 
 export function Signup({onSubmit}: SignupProps) {
-    const inputs = useRef([
+    const inputs = useRef<Control[]>([
         {
             id: 1,
             name: 'name',
@@ -49,7 +47,7 @@ export function Signup({onSubmit}: SignupProps) {
         },
         {
             id: 6,
-            name: 'password',
+            name: 'repeat_password',
             label: 'Повторите пароль',
             type: 'password',
             value: '',
@@ -64,13 +62,53 @@ export function Signup({onSubmit}: SignupProps) {
 
     const handleSubmit: SubmitEventHandler = (event) => {
         event.preventDefault();
-        onSubmit(inputs.current);
+        validateForm();
+
+        if (isFormValid)
+            onSubmit(inputs.current);
     };
+
+    const validateForm = useCallback(() => {
+        const emailError = getEmailError();
+        const passwordError = getPasswordError();
+        setInputsErrors({emailError, passwordError});
+    }, []);
+
+    const getEmailError = useCallback(() => {
+        const email = getControl(inputs.current, 'email');
+        const emailValue = getControlValue(email);
+        return validateEmail(emailValue) ? EMAIL_ERROR : '';
+    }, []);
+
+    const getPasswordError = useCallback(() => {
+        const password = getControl(inputs.current, 'password');
+        const passwordValue = getControlValue(password);
+
+        const repeatPassword = getControl(inputs.current, 'repeat_password');
+        const repeatPasswordValue = getControlValue(repeatPassword);
+
+        return validatePassword(passwordValue, repeatPasswordValue) ? PASSWORD_ERROR : '';
+    }, []);
+
+    const setInputsErrors = useCallback(({emailError='', passwordError=''}: {emailError: string; passwordError: string }) => {
+        inputs.current = inputs.current.map(c => {
+            if (c.name === 'email')
+                return {...c, error: emailError};
+
+            if (c.name === 'password' || c.name === 'repeat_password')
+                return {...c, error: passwordError};
+
+            return c;
+        });
+    }, []);
+
+    const isFormValid = useMemo((): boolean => !!inputs.current.find(c => c.error), [inputs.current]);
 
     return (
         <>
             <h2>Регистрация</h2>
             <form
+                noValidate
                 onChange={handleChange}
                 onSubmit={handleSubmit}
             >
