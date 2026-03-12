@@ -13,7 +13,8 @@ export function TextInput({
     radius='sm',
     size='sm',
     disabled=false,
-    asterisk=false
+    asterisk=false,
+    type='text'
 }: Control) {
 
     const inputClassName = cn(
@@ -33,7 +34,7 @@ export function TextInput({
             <div className='control-text-description'>{description}</div>
             <input
                 className='control-text-input'
-                type="text"
+                type={type}
                 name={name}
                 placeholder={placeholder}
             />
