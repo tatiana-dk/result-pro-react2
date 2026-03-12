@@ -1,18 +1,55 @@
-import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { useCallback, useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { TextInput } from "./TextInput";
+import type {Control} from './types.ts';
 
 interface SignupProps {
     onSubmit: (arg: {}) => void
 };
 
 export function Signup({onSubmit}: SignupProps) {
-    const inputs = useRef({
-        name: '',
-        nickname: '',
-        email: '',
-        gender: '',
-        password: '',
-        repeatPassword: ''
-    });
+    const inputs = useRef([
+        {
+            id: 1,
+            name: 'name',
+            label: 'Имя',
+            type: 'text',
+            value: '',
+            placeholder: 'Введите Ваше имя'
+        },
+        {
+            id: 2,
+            name: 'nickname',
+            label: 'Ник',
+            type: 'text',
+            value: '',
+            placeholder: 'Ваш ник'
+        },
+        {
+            id: 3,
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            value: '',
+            placeholder: 'Ваш email'
+        },
+        // gender: '',
+        {
+            id: 5,
+            name: 'password',
+            label: 'Пароль',
+            type: 'password',
+            value: '',
+            placeholder: 'Введите пароль'
+        },
+        {
+            id: 6,
+            name: 'password',
+            label: 'Повторите пароль',
+            type: 'password',
+            value: '',
+            placeholder: 'Повторите пароль'
+        },
+    ]);
 
     const handleChange: ChangeEventHandler = (event: ChangeEvent) => {
         const target = event.target as HTMLInputElement;
@@ -28,6 +65,12 @@ export function Signup({onSubmit}: SignupProps) {
         onSubmit(inputs.current);
     };
 
+    const isTextInput = useCallback((input: Control) => {
+        return input.type === 'text' ||
+            input.type === 'email' ||
+            input.type === 'password'
+    }, []);
+
     return (
         <>
             <h2>Регистрация</h2>
@@ -36,14 +79,9 @@ export function Signup({onSubmit}: SignupProps) {
                 onSubmit={handleSubmit}
             >
                 {
-                    Object.keys(inputs.current).map((key) => {
+                    inputs.current.map((input) => {
                         return (
-                            <div>
-                                <input
-                                    type={key}
-                                    name={key}
-                                />
-                            </div>
+                            (isTextInput(input)) && <TextInput {...input}/>
                         );
                     })
                 }
