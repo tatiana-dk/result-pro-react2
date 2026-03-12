@@ -1,9 +1,15 @@
-import { useCallback, useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
 import { TextInput } from "./TextInput";
 import type {Control} from './types.ts';
 
 interface SignupProps {
-    onSubmit: (arg: {}) => void
+    onSubmit: (arg: Control[]) => void
+};
+
+const isTextInput = (input: Control) => {
+    return input.type === 'text' ||
+        input.type === 'email' ||
+        input.type === 'password'
 };
 
 export function Signup({onSubmit}: SignupProps) {
@@ -53,23 +59,13 @@ export function Signup({onSubmit}: SignupProps) {
 
     const handleChange: ChangeEventHandler = (event: ChangeEvent) => {
         const target = event.target as HTMLInputElement;
-
-        inputs.current = {
-            ...inputs.current,
-            [target.name]: target.value
-        };
+        inputs.current = inputs.current.map(c => c.name === target.name ? {...c, value: target.value} : c);
     };
 
     const handleSubmit: SubmitEventHandler = (event) => {
         event.preventDefault();
         onSubmit(inputs.current);
     };
-
-    const isTextInput = useCallback((input: Control) => {
-        return input.type === 'text' ||
-            input.type === 'email' ||
-            input.type === 'password'
-    }, []);
 
     return (
         <>

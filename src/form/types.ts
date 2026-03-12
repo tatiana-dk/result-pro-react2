@@ -11,4 +11,5 @@ export interface Control {
     size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     disabled?: boolean;
     asterisk?: boolean;
+    value?: string;
 };

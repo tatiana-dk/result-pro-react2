@@ -1,22 +1,33 @@
 import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import type {Control} from './types.ts';
 
 interface SigninProps {
-    onSubmit: (arg: {}) => void
+    onSubmit: (arg: Control[]) => void
 };
 
 export function Signin({onSubmit}: SigninProps) {
-    const inputs = useRef({
-        email: '',
-        password: ''
-    });
+    const inputs = useRef([
+        {
+            id: 1,
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            value: '',
+            placeholder: 'Ваш email'
+        },
+        {
+            id: 2,
+            name: 'password',
+            label: 'Пароль',
+            type: 'password',
+            value: '',
+            placeholder: 'Введите пароль'
+        },
+    ]);
 
     const handleChange: ChangeEventHandler = (event: ChangeEvent) => {
         const target = event.target as HTMLInputElement;
-
-        inputs.current = {
-            ...inputs.current,
-            [target.name]: target.value
-        };
+        inputs.current = inputs.current.map(c => c.name === target.name ? {...c, value: target.value} : c);
     };
 
     const handleSubmit: SubmitEventHandler = (event) => {
