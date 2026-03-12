@@ -115,7 +115,7 @@ export function Signup({onSubmit}: SignupProps) {
                 {
                     inputs.current.map((input) => {
                         return (
-                            (isTextInput(input)) && <TextInput {...input}/>
+                            (isTextInput(input)) && <TextInput key={input.id} {...input}/>
                         );
                     })
                 }
