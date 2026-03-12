@@ -1,0 +1,87 @@
+.control-text {
+    display: grid;
+    gap: 2px;
+    --fs: 16px;
+}
+
+.control-text-size-xs {
+    --fs: 12px;
+}
+.control-text-size-sm {
+    --fs: 16px;
+}
+.control-text-size-md {
+    --fs: 20px;
+}
+.control-text-size-lg {
+    --fs: 24px;
+}
+.control-text-size-xl {
+    --fs: 28px;
+}
+
+.control-text-label {
+    font-size: calc(var(--fs) * .75);
+}
+.control-text-description {
+    font-size: calc(var(--fs) * .85);
+}
+
+.control-text-input {
+    border: 1px solid #ddd;
+    padding: 0 var(--fs);
+    color: #000;
+    transition: border-color .3s ease;
+    font-size: var(--fs);
+    line-height: 2.5;
+}
+.control-text-input:focus {
+    outline: none;
+    border-color: fuchsia;
+}
+
+.control-text-error {
+    font-size: calc(var(--fs) * .85);
+}
+
+.control-text-variant-default {}
+.control-text-variant-filled .control-text-input {
+    background-color: #fafafa;
+}
+.control-text-variant-unstyled .control-text-input {
+    border: none;
+    padding: 0;
+}
+
+.control-text-radius-xs .control-text-input {
+    border-radius: 2px;
+}
+.control-text-radius-sm .control-text-input {
+    border-radius: 4px;
+}
+.control-text-radius-md .control-text-input {
+    border-radius: 8px;
+}
+.control-text-radius-lg .control-text-input {
+    border-radius: 16px;
+}
+.control-text-radius-xl .control-text-input {
+    border-radius: 32px;
+}
+
+.control-text--error .control-text-input {
+    color: #f00;
+    border-color: #f00;
+}
+.control-text--error .control-text-input::placeholder {
+    color: #f00;
+}
+.control-text--error .control-text-error {
+    color: #f00;
+}
+.control-text--disabled .control-text-input {
+    pointer-events: none;
+    cursor: default;
+    opacity: .7;
+    user-select: none;
+}
