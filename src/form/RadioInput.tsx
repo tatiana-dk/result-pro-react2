@@ -20,13 +20,13 @@ export function RadioInput({
     const [checked, setChecked] = useState(options.map(() => false));
 
     const inputClassName = cn(
-        'control-text',
-        `control-text-variant-${variant}`,
-        `control-text-radius-${radius}`,
-        `control-text-size-${size}`,
+        'control-radio',
+        `control-radio-variant-${variant}`,
+        `control-radio-radius-${radius}`,
+        `control-radio-size-${size}`,
         {
-            'control-text--error': error,
-            'control-text--disabled': disabled,
+            'control-radio--error': error,
+            'control-radio--disabled': disabled,
         }
     );
 
@@ -36,14 +36,14 @@ export function RadioInput({
 
     return (
         <div className={inputClassName}>
-            <label className='control-text-label'>{label} {asterisk && '*'}</label>
-            <div className='control-text-description'>{description}</div>
+            <label className='control-radio-label'>{label} {asterisk && '*'}</label>
+            <div className='control-radio-description'>{description}</div>
             {
                 options.map((option, index) => {
                     return (
-                        <div key={index}>
+                        <label className='control-radio-text' key={index}>
                             <input
-                                className='control-text-input'
+                                className='control-radio-input'
                                 type={type}
                                 name={name}
                                 value={option.code}
@@ -51,12 +51,12 @@ export function RadioInput({
                                 onChange={() => {handleChange(index)}}
                                 id={`id${index}`}
                             />
-                            <label htmlFor={`id${index}`}>{option.label}</label>
-                        </div>
+                            <span>{option.label}</span>
+                        </label>
                     );
                 })
             }
-            <div className='control-text-error'>{error}</div>
+            <div className='control-radio-error'>{error}</div>
         </div>
     );
 }
