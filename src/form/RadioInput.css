@@ -1,0 +1,33 @@
+.control-radio {
+    display: grid;
+    gap: 2px;
+    --fs: 16px;
+}
+.control-radio-size-xs {
+    --fs: 12px;
+}
+.control-radio-size-sm {
+    --fs: 16px;
+}
+.control-radio-size-md {
+    --fs: 20px;
+}
+.control-radio-size-lg {
+    --fs: 24px;
+}
+.control-radio-size-xl {
+    --fs: 28px;
+}
+
+.control-radio-label {
+    font-size: calc(var(--fs) * .75);
+}
+.control-radio-description {
+    font-size: calc(var(--fs) * .85);
+}
+
+.control-radio-text {
+    font-size: var(--fs);
+}
+.control-radio-input {
+}
