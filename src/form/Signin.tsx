@@ -1,4 +1,6 @@
 import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { TextInput } from "./TextInput.tsx";
+import {isTextInput} from './utils.ts';
 import type {Control} from './types.ts';
 
 interface SigninProps {
@@ -27,7 +29,7 @@ export function Signin({onSubmit}: SigninProps) {
 
     const handleChange: ChangeEventHandler = (event: ChangeEvent) => {
         const target = event.target as HTMLInputElement;
-        inputs.current = inputs.current.map(c => c.name === target.name ? {...c, value: target.value} : c);
+        inputs.current = inputs.current.map(c => c.name === target.name ? {...c, value: target.value} : {...c});
     };
 
     const handleSubmit: SubmitEventHandler = (event) => {
@@ -39,21 +41,17 @@ export function Signin({onSubmit}: SigninProps) {
         <>
             <h2>Авторизация</h2>
             <form
+                noValidate
                 onChange={handleChange}
                 onSubmit={handleSubmit}
             >
-                <div>
-                    <input
-                        type="email"
-                        name="email"
-                    />
-                </div>
-                <div>
-                    <input
-                        type="password"
-                        name="password"
-                    />
-                </div>
+                {
+                    inputs.current.map((input) => {
+                        return (
+                            (isTextInput(input)) && <TextInput key={input.id} {...input}/>
+                        );
+                    })
+                }
                 <button type="submit">Войти</button>
             </form>
         </>
