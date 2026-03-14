@@ -49,6 +49,8 @@
     transition: border-color .3s ease;
     font-size: var(--fs);
     line-height: 2.5;
+    width: 100%;
+    box-sizing: border-box;
 }
 .control-text-input:focus {
     outline: none;
