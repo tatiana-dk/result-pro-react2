@@ -3,7 +3,6 @@ import './RadioInput.css';
 import type {Control} from './types.ts';
 import { useState, useCallback} from 'react';
 
-
 export function RadioInput({
     name,
     label,
@@ -16,7 +15,7 @@ export function RadioInput({
     disabled=false,
     asterisk=false,
     type='text',
-    options=[]
+    options=[],
 }: Control) {
     const [checked, setChecked] = useState(options.map(() => false));
 
@@ -42,15 +41,18 @@ export function RadioInput({
             {
                 options.map((option, index) => {
                     return (
-                        <input
-                            className='control-text-input'
-                            type={type}
-                            name={name}
-                            value={option}
-                            checked={checked[index]}
-                            key={index}
-                            onChange={() => {handleChange(index)}}
-                        />
+                        <div key={index}>
+                            <input
+                                className='control-text-input'
+                                type={type}
+                                name={name}
+                                value={option.code}
+                                checked={checked[index]}
+                                onChange={() => {handleChange(index)}}
+                                id={`id${index}`}
+                            />
+                            <label htmlFor={`id${index}`}>{option.label}</label>
+                        </div>
                     );
                 })
             }

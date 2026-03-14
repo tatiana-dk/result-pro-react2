@@ -1,3 +1,6 @@
+// import type { Icon } from '@tabler/icons-react';
+import {type ReactNode} from 'react';
+
 export interface Control {
     id: string | number;
     name: string;
@@ -12,5 +15,11 @@ export interface Control {
     disabled?: boolean;
     asterisk?: boolean;
     value?: string;
-    options?: string[];
+    options?: Option[];
+    icon?: ReactNode;
 };
+
+export interface Option {
+    code: string;
+    label: string;
+}

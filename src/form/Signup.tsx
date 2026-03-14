@@ -3,6 +3,7 @@ import { TextInput } from "./TextInput.tsx";
 import { RadioInput } from "./RadioInput.tsx";
 import {isTextInput} from './utils.ts';
 import type {Control} from './types.ts';
+import { IconAt } from '@tabler/icons-react';
 
 interface SignupProps {
     onSubmit: (arg: Control[]) => void
@@ -24,7 +25,8 @@ export function Signup({onSubmit}: SignupProps) {
             label: 'Ник',
             type: 'text',
             value: '',
-            placeholder: 'Ваш ник'
+            placeholder: 'Ваш ник',
+            icon: <IconAt color="#ababab" size={24} />
         },
         {
             id: 3,
@@ -41,7 +43,16 @@ export function Signup({onSubmit}: SignupProps) {
             type: 'radio',
             value: '',
             placeholder: 'Ваш пол',
-            options: ['male', 'female']
+            options: [
+                {
+                    code: 'male',
+                    label: 'Мужской'
+                }, 
+                {
+                    code: 'female',
+                    label: 'Женский'
+                }
+            ]
         },
         {
             id: 5,

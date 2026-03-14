@@ -14,7 +14,8 @@ export function TextInput({
     size='sm',
     disabled=false,
     asterisk=false,
-    type='text'
+    type='text',
+    icon
 }: Control) {
 
     const inputClassName = cn(
@@ -28,16 +29,24 @@ export function TextInput({
         }
     );
 
+    const inputInputClassName = cn(
+        'control-text-input',
+        {'control-text-input--icon': icon}
+    );
+
     return (
         <div className={inputClassName}>
             <label className='control-text-label'>{label} {asterisk && '*'}</label>
             <div className='control-text-description'>{description}</div>
-            <input
-                className='control-text-input'
-                type={type}
-                name={name}
-                placeholder={placeholder}
-            />
+            <div className='control-text-wrapper'>
+                {icon && <div className='control-text-icon'>{icon}</div>}
+                <input
+                    className={inputInputClassName}
+                    type={type}
+                    name={name}
+                    placeholder={placeholder}
+                />
+            </div>
             <div className='control-text-error'>{error}</div>
         </div>
     );
