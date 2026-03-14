@@ -1,5 +1,6 @@
-import { useRef, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
+import { useRef, useState, type ChangeEvent, type ChangeEventHandler, type SubmitEventHandler } from "react";
 import { TextInput } from "./TextInput.tsx";
+import { RadioInput } from "./RadioInput.tsx";
 import {isTextInput} from './utils.ts';
 import type {Control} from './types.ts';
 
@@ -33,7 +34,15 @@ export function Signup({onSubmit}: SignupProps) {
             value: '',
             placeholder: 'Ваш email'
         },
-        // gender: '',
+        {
+            id: 4,
+            name: 'gender',
+            label: 'Пол',
+            type: 'radio',
+            value: '',
+            placeholder: 'Ваш пол',
+            options: ['male', 'female']
+        },
         {
             id: 5,
             name: 'password',
@@ -73,7 +82,9 @@ export function Signup({onSubmit}: SignupProps) {
                 {
                     inputs.current.map((input) => {
                         return (
-                            (isTextInput(input)) && <TextInput key={input.id} {...input}/>
+                            (isTextInput(input)) ?
+                                <TextInput key={input.id} {...input}/> :
+                                <RadioInput key={input.id} {...input}/>
                         );
                     })
                 }

@@ -12,4 +12,5 @@ export interface Control {
     disabled?: boolean;
     asterisk?: boolean;
     value?: string;
+    options?: string[];
 };
